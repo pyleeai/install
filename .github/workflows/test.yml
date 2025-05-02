@@ -32,9 +32,9 @@ jobs:
 
           if [ $( id -u ) -eq 0 ]; then
               adduser -D github
-              sudo -u github ./test/test.sh "${{ matrix.platform.script }}"
+              sudo -u github sh test/test.sh "${{ matrix.platform.script }}"
           else
-              ./test/test.sh "${{ matrix.platform.script }}"
+              sh test/test.sh "${{ matrix.platform.script }}"
           fi
 
           exit 0
