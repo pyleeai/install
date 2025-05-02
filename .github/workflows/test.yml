@@ -1,0 +1,40 @@
+name: Test
+
+on:
+  push:
+  pull_request:
+  release:
+    types: [published]
+
+jobs:
+  test:
+    name: |
+      ${{ matrix.platform.os_name }} - ${{ matrix.platform.script }} - ${{ ( matrix.tag == '' && 'no tag' ) || matrix.tag }}
+    runs-on: ${{ matrix.platform.os }}
+    container: ${{ matrix.platform.container }}
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - os_name: Linux
+            os: ubuntu-24.04
+            script: install.sh
+          - os_name: macOS
+            os: macOS-latest
+            script: install.sh
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run bootstrap script
+        shell: sh
+        run: |
+          set -e
+          set -x
+
+          if [ $( id -u ) -eq 0 ]; then
+              adduser -D github
+              sudo -u github ./test/test.sh "${{ matrix.platform.script }}"
+          else
+              ./test/test.sh "${{ matrix.platform.script }}"
+          fi
+
+          exit 0
