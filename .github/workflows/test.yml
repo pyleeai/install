@@ -9,7 +9,7 @@ on:
 jobs:
   test:
     name: |
-      ${{ matrix.platform.os_name }} - ${{ matrix.platform.script }} - ${{ ( matrix.tag == '' && 'no tag' ) || matrix.tag }}
+      ${{ matrix.platform.os_name }} - ${{ matrix.platform.script }}
     runs-on: ${{ matrix.platform.os }}
     container: ${{ matrix.platform.container }}
     strategy:
