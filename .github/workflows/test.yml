@@ -23,7 +23,7 @@ jobs:
             os: macOS-latest
             script: install.sh
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Run bootstrap script
         shell: sh
         run: |
